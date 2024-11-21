@@ -21,14 +21,14 @@ pipeline {
         }
 
         stage('Push to DockerHub') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        docker.image('rinwismith/flask-app').push('latest')
-                    }
-                }
+    steps {
+        script {
+            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                docker.image('****/flask-app').push()
             }
         }
+    }
+}
 
         stage('Deploy') {
             steps {
