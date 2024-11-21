@@ -24,7 +24,7 @@ pipeline {
     steps {
         script {
             docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                docker.image('****/flask-app').push()
+                docker.image('Dareal1999/flask-app').push()
             }
         }
     }
