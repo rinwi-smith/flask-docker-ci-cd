@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id') // Set DockerHub credentials in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('bdbe1e9c-4fe8-4763-a039-fb8b2b91a81b') // Set DockerHub credentials in Jenkins
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/flask-docker-ci-cd.git'
+                git branch: 'main', url: 'https://github.com/rinwi-smith/flask-docker-ci-cd.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('your-dockerhub-username/flask-app')
+                    docker.build('rinwismith/flask-app')
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        docker.image('your-dockerhub-username/flask-app').push('latest')
+                        docker.image('rinwismith/flask-app').push('latest')
                     }
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker run -d -p 5000:5000 your-dockerhub-username/flask-app'
+                    sh 'docker run -d -p 5000:5000 rinwismith/flask-app'
                 }
             }
         }
