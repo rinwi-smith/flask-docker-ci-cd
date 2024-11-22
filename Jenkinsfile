@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('bdbe1e9c-4fe8-4763-a039-fb8b2b91a81b') // Set DockerHub credentials in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('ducker_hub') // Use the ID of your DockerHub credential in Jenkins
     }
 
     stages {
@@ -15,25 +15,25 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('rinwismith/flask-app')
+                    docker.build('rinwismith/flask-app') // Build the Docker image with your DockerHub username and app name
                 }
             }
         }
 
         stage('Push to DockerHub') {
-    steps {
-        script {
-            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                docker.image('Dareal1999/flask-app').push()
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'ducker_hub') {
+                        docker.image('rinwismith/flask-app').push() // Push the image to DockerHub using your credentials
+                    }
+                }
             }
         }
-    }
-}
 
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker run -d -p 5000:5000 rinwismith/flask-app'
+                    sh 'docker run -d -p 5000:5000 rinwismith/flask-app' // Run the container locally
                 }
             }
         }
