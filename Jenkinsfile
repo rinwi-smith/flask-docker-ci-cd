@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('ducker_hub') // Use the ID of your DockerHub credential in Jenkins
+        DOCKERHUB_CREDENTIALS = credentials('ducker_Hub') // Use the ID of your DockerHub credential in Jenkins
     }
 
     stages {
@@ -23,7 +23,7 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'ducker_hub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'ducker_Hub') {
                         docker.image('rinwismith/flask-app').push() // Push the image to DockerHub using your credentials
                     }
                 }
